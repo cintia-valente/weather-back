@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "WHEATER_DATA")
+@Table(name = "wheater_data")
 @Entity
 public class WheaterDataEntity {
 
@@ -21,7 +21,7 @@ public class WheaterDataEntity {
     private Long idWheaterData;
 
     @ManyToOne
-    @JoinColumn(name = "idCity", nullable = false)
+    @JoinColumn(name = "id_city", nullable = false)
     private CityEntity city;
 
     private LocalDate date;
