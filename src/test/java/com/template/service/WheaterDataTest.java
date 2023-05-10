@@ -1,11 +1,8 @@
 package com.template.service;
 
-import com.template.business.services.WheaterDataService;
 import com.template.data.entity.CityEntity;
-import com.template.data.entity.WheaterDataEntity;
 import com.template.data.entity.enums.DayTimeEnum;
 import com.template.data.entity.enums.NightTimeEnum;
-import com.template.data.repository.WheaterDataRepository;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -23,9 +20,6 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;

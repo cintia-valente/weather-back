@@ -5,12 +5,14 @@ import com.template.data.entity.enums.DayTimeEnum;
 import com.template.data.entity.enums.NightTimeEnum;
 import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-public class WheaterDataResponseDTO {
+@NoArgsConstructor
+public class WeatherDataResponseDTO {
 
     private CityEntity city;
 

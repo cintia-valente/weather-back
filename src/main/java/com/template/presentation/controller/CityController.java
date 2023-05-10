@@ -30,6 +30,7 @@ public class CityController {
         BeanUtils.copyProperties(cityRequestDTO, cityEntity);
         return ResponseEntity.status(HttpStatus.CREATED).body(cityService.save(cityEntity));
     }
+
     @GetMapping("/cities/all")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<CityEntity>> getAll() throws IOException {
