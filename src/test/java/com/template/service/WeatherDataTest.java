@@ -1,13 +1,14 @@
 package com.template.service;
 
 import com.template.business.services.CityService;
-import com.template.business.services.WheaterDataService;
+import com.template.business.services.WeatherDataService;
+
 import com.template.data.entity.CityEntity;
-import com.template.data.entity.WheaterDataEntity;
+import com.template.data.entity.WeatherDataEntity;
 import com.template.data.entity.enums.DayTimeEnum;
 import com.template.data.entity.enums.NightTimeEnum;
-import com.template.data.repository.WheaterDataRepository;
 
+import com.template.data.repository.WeatherDataRepository;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,22 +32,22 @@ import java.time.LocalDate;
 import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
-public class WheaterDataTest {
+public class WeatherDataTest {
 
     @Mock
-    WheaterDataEntity wheaterDataEntiytMock;
+    WeatherDataEntity wheaterDataEntiytMock;
 
     @Mock
-    WheaterDataRepository wheaterDataRepositoryMock;
+    WeatherDataRepository wheaterDataRepositoryMock;
 
     @Mock
     CityService cityServiceMock;
 
     @InjectMocks
-    WheaterDataService wheaterDataServiceMock;
+    WeatherDataService wheaterDataServiceMock;
 
-    public WheaterDataEntity wheaterDataEntityLis1tMock() {
-        return new WheaterDataEntity(602L,
+    public WeatherDataEntity wheaterDataEntityLis1tMock() {
+        return new WeatherDataEntity(602L,
                 new CityEntity(202L, "Porto Alegre"),
                 LocalDate.of(2023, 4, 28),
                 DayTimeEnum.SOL_COM_NUVENS,
@@ -59,8 +60,8 @@ public class WheaterDataTest {
         );
     }
 
-    public WheaterDataEntity wheaterDataEntityLis2tMock() {
-        return new WheaterDataEntity(403L,
+    public WeatherDataEntity wheaterDataEntityLis2tMock() {
+        return new WeatherDataEntity(403L,
                 new CityEntity(203L, "Gramado"),
                 LocalDate.of(2023, 3, 31),
                 DayTimeEnum.NUBLADO,
@@ -98,13 +99,13 @@ public class WheaterDataTest {
     @Test
     void findAllSuccessfully() {
         // Arrange
-        WheaterDataEntity wheaterDataEntityList1 = wheaterDataEntityLis1tMock();
-        WheaterDataEntity wheaterDataEntityList2 = wheaterDataEntityLis2tMock();
+        WeatherDataEntity wheaterDataEntityList1 = wheaterDataEntityLis1tMock();
+        WeatherDataEntity wheaterDataEntityList2 = wheaterDataEntityLis2tMock();
 
         when(wheaterDataRepositoryMock.findAllByOrderByDateDesc()).thenReturn(List.of(wheaterDataEntityList1, wheaterDataEntityList2));
 
         // Act
-        List<WheaterDataEntity> wheaterDataList = wheaterDataServiceMock.findAll();
+        List<WeatherDataEntity> wheaterDataList = wheaterDataServiceMock.findAll();
 
         // Assert
         Assertions.assertEquals(2, wheaterDataList.size());
@@ -130,7 +131,7 @@ public class WheaterDataTest {
         // Arrange
         String name = "Porto Alegre";
 
-        WheaterDataEntity wheaterDataEntityName1 = new WheaterDataEntity(1L, new CityEntity(201L, "Porto Alegre"),
+        WeatherDataEntity wheaterDataEntityName1 = new WeatherDataEntity(1L, new CityEntity(201L, "Porto Alegre"),
                 LocalDate.of(2023, 4, 20),
                 DayTimeEnum.NUBLADO,
                 NightTimeEnum.NUBLADA,
@@ -140,7 +141,7 @@ public class WheaterDataTest {
                 26,
                 10);
 
-        WheaterDataEntity wheaterDataEntityName2 = new WheaterDataEntity(2L, new CityEntity(202L, "Porto Alegre"),
+        WeatherDataEntity wheaterDataEntityName2 = new WeatherDataEntity(2L, new CityEntity(202L, "Porto Alegre"),
                 LocalDate.of(2023, 4, 10),
                 DayTimeEnum.SOL_COM_NUVENS,
                 NightTimeEnum.CHUVA,
@@ -154,10 +155,10 @@ public class WheaterDataTest {
         when(wheaterDataRepositoryMock.findAllByCityNameIgnoreCase(name, sort)).thenReturn(List.of(wheaterDataEntityName1, wheaterDataEntityName2));
 
         // Act
-        List<WheaterDataEntity> result = wheaterDataServiceMock.findAllByName(name, sort);
+        List<WeatherDataEntity> result = wheaterDataServiceMock.findAllByName(name, sort);
 
         // Assert
-        for (WheaterDataEntity entity : result) {
+        for (WeatherDataEntity entity : result) {
             assertEquals(name, entity.getCity().getName());
         }
     }
@@ -187,9 +188,9 @@ public class WheaterDataTest {
         String name = "Porto Alegre";
         Sort sort = Sort.by("date").ascending();
 
-        List<WheaterDataEntity> entityList = new ArrayList<>();
+        List<WeatherDataEntity> entityList = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            WheaterDataEntity entity = new WheaterDataEntity();
+            WeatherDataEntity entity = new WeatherDataEntity();
             entity.setDate(today.plusDays(i));
             entity.setCity(new CityEntity(202L, name));
             entityList.add(entity);
@@ -198,7 +199,7 @@ public class WheaterDataTest {
         when(wheaterDataRepositoryMock.findByCityNameIgnoreCaseAndDateBetween(name, today, days, sort)).thenReturn(entityList);
 
         // Act
-        List<WheaterDataEntity> resultList = wheaterDataServiceMock.findByDateBetween(name);
+        List<WeatherDataEntity> resultList = wheaterDataServiceMock.findByDateBetween(name);
 
         // Assert
         for (int i = 0; i < 6; i++) {
@@ -243,17 +244,17 @@ public class WheaterDataTest {
 
         when(cityServiceMock.findById(city.getIdCity())).thenReturn(Optional.of(city));
 
-        WheaterDataEntity entity = new WheaterDataEntity(id, city, date, dayTime, nightTime,
+        WeatherDataEntity entity = new WeatherDataEntity(id, city, date, dayTime, nightTime,
                 maxTemperature, minTemperature, windSpeed, humidity, precipitation);
 
-        when(wheaterDataRepositoryMock.findById(entity.getIdWheaterData())).thenReturn(Optional.of(entity));
+        when(wheaterDataRepositoryMock.findById(entity.getIdWeatherData())).thenReturn(Optional.of(entity));
         when(wheaterDataRepositoryMock.save(entity)).thenReturn(entity);
 
         // Act
-        WheaterDataEntity updatedEntity = wheaterDataServiceMock.update(id, entity);
+        WeatherDataEntity updatedEntity = wheaterDataServiceMock.update(id, entity);
 
         // Assert
-        assertEquals(id, updatedEntity.getIdWheaterData());
+        assertEquals(id, updatedEntity.getIdWeatherData());
         assertEquals(city, updatedEntity.getCity());
         assertEquals(date, updatedEntity.getDate());
         assertEquals(dayTime, updatedEntity.getDayTimeEnum());
@@ -284,7 +285,7 @@ public class WheaterDataTest {
     public void updateFailure() {
         // Arrange
         Long idWheaterData = 100L;
-        WheaterDataEntity wheaterDataEntityList1 = wheaterDataEntityLis1tMock();
+        WeatherDataEntity wheaterDataEntityList1 = wheaterDataEntityLis1tMock();
 
         // Act
         when(wheaterDataRepositoryMock.findById(idWheaterData))

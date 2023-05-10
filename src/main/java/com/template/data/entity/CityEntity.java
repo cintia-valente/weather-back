@@ -12,12 +12,12 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "CITY")
-@Entity
+@Entity(name = "CITY")
 public class CityEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "city_seq")
+    @SequenceGenerator(name = "city_seq", sequenceName = "city_id_city_seq", allocationSize = 1)
     private Long idCity;
 
     @NotNull

@@ -3,14 +3,18 @@ package com.template.dto;
 import com.template.data.entity.CityEntity;
 import com.template.data.entity.enums.DayTimeEnum;
 import com.template.data.entity.enums.NightTimeEnum;
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-public class WheaterDataResponseDTO {
+@NoArgsConstructor
+public class WeatherDataRequestDTO {
+
+    private Long idWeatherData;
 
     private CityEntity city;
 
